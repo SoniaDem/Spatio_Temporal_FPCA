@@ -116,7 +116,7 @@ score_func_ij = b_coefs %*% t(basis_all)
 matplot(t(score_func_ij), type='l')
 
 
-#this is a note
+#this is a note updated note
 
 
 ##
