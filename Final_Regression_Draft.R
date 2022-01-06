@@ -1,4 +1,4 @@
-
+library(fda)
 #subject ID numebrs
 subjects = c(1,3,4,5,6,8,9,10,11,12,15,16,17,19,21) #2 & 18 omitted as they couldn't load
 
@@ -39,11 +39,20 @@ for (mm in 1:M) {
 
 
 # ======== PREDETERMINED BAIS FUNCTION + KRONECKER PRODUCT ========= 
-p = 3 
+
+# b-spline basis
+p = 5
 
 basis = bs(c((1:ttime)/ttime - 1/2/ttime), df = ttime + p, degree = p)
 
-phi_basis = kronecker(eF.smooth[1, , , ], basis)
+par(mfrow = c(1,1))
+name <- paste('Basis Function B-Spline' , sep ="", collapse=NULL)
+matplot(c(1:ttime), basis, type='l')
+title(name)
+
+# fourier basis
+
+
 
 # ======== 1 BASIS VECTOR CASE ========= 
 
@@ -75,11 +84,14 @@ for (idxx in 1:ncol(basis_all)){
   for (idx in 1:nrow(basis_all)) {
     XX[ , , , idx] = basis_all[idx, idxx]*eF.smooth[1, , , ]
   }
-  #balculate the b coefficient
+  #calculate the b coefficient
   b_coefs[idxx] = threeDsum(XX*XX)^(-1)*threeDsum(Yall[1, , , ,] * XX)
 }
-
+ 
 #recreate the score function over time
+
+par(mar=c(2,2,2,2))
+par(mfrow = c(2,2))
 score_func_ij = b_coefs %*% t(basis_all)
 matplot(t(score_func_ij), type='l')
 

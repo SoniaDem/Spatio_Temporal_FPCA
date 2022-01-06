@@ -7,7 +7,9 @@ lapply(libraries, function(x) if (!(x %in% installed.packages())) {
 })
 lapply(libraries, library, quietly = TRUE, character.only = TRUE)
 
-
+install.packages("BiocManager")
+library("BiocManager")
+BiocManager::install("rhdf5")
 # =========== SET UP FUNCTIONS ===========
 
 cube_mean2 = function(Y, m, n, l) {
@@ -120,7 +122,8 @@ aYall = array(0, c(I, m, n, l, ttime))
 aYva = array(0, c(I, ttime))
 
 #image directroy, retrieve all images
-image_dir = "D:/R/Spatial_FPCA/FMRI"
+#image_dir = "D:/R/Spatial_FPCA/FMRI"
+image_dir= "/Volumes/T7/R/Spatial_FPCA/FMRI"
 
 fmri_data_names <- list.files(path = image_dir, pattern = "*.mat" )
 fmri_data_names <- fmri_data_names[-10][-8]
